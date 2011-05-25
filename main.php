@@ -2,7 +2,7 @@
 /*
 Plugin Name: Nice Navigation Widget
 Plugin URI: 
-Description: This widgets add a sub navigation to any page, post or whatever.
+Description: This widgets adds a sub navigation to any page, post or whatever.
 Version: 1.0.0
 Author: Benjamin Kleiner <bizzl@users.sourceforge.net>
 Author URI: 
