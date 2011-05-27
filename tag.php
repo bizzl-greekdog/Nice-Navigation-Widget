@@ -6,6 +6,7 @@ if (!function_exists('tag')) {
 		private $attributes = array();
 		private $children = array();
 		private $style = array();
+		private $classes = array();
 		
 		private function parseCSS($input) {
 			$input = strpos($input, ';') > -1 ? explode($input, ';') : array($input);
@@ -30,11 +31,17 @@ if (!function_exists('tag')) {
 			else
 				if ($value == 'style')
 					return clone $this->style;
+				elseif ($value == 'class')
+					return clone $this->classes;
 				else
 					return $this->attributes[$name];
 			if (isset($this->attributes['style'])) {
 				$this->parseCSS($this->attributes['style']);
 				unset($this->attributes['style']);
+			}
+			if (isset($this->attributes['class'])) {
+				$this->addClass($this->attributes['class']);
+				unset($this->attributes['class']);
 			}
 			return $this;
 		}
@@ -48,6 +55,30 @@ if (!function_exists('tag')) {
 				$this->parseCSS($name);
 			else
 				return $this->style[$name];
+			return $this;
+		}
+		
+		public function addClass($classes) {
+			if (is_array($classes))
+				$this->classes = array_merge($this->classes, $classes);
+			elseif (func_num_args())
+				$classes = func_get_args();
+			elseif (strstr($classes, ' ') > -1)
+				$this->classes = array_merge($this->classes, explode(' ', $classes));
+			else
+				$this->classes[] = $classes;
+			$this->classes = array_unique($this->classes);
+			return $this;
+		}
+		
+		public function removeClass($classes) {
+			if (!is_array($classes))
+				if (strstr($classes, ' ') > -1)
+					$classes = explode(' ', $classes);
+				else
+					$classes = array($classes);
+			foreach ($classes as $class)
+			$this->classes = array_diff($this->classes, $classes);
 			return $this;
 		}
 
