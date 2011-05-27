@@ -74,9 +74,9 @@ class Nice_Navigation_Widget extends WP_Widget {
 	}
 
 	function get_sub_post_tree($root, $me = null) {
-		$li = tag('li')->addClass('menu-item', 'menu-item-type-' . $root->type, 'menu-item-' . $root->ID, 'menu-item-object-' . $root->object);
+		$li = tag('li')->addClass('page_item'); #->addClass('menu-item', 'menu-item-type-' . $root->type, 'menu-item-' . $root->ID, 'menu-item-object-' . $root->object);
 		if ($me == $root->object_id)
-			$li->addClass('current_page');
+			$li->addClass('current_page_item');#->addClass('current_page');
 		$li->append(tag('a')->attr('href', $root->url)->append(get_post($root->object_id)->post_title));
 		if (count($root->children)) {
 			$ul = tag('ul')->addClass('sub-menu');
@@ -109,7 +109,7 @@ class Nice_Navigation_Widget extends WP_Widget {
 			if ($post->ID == $menu_item->object_id)
 				$top_most = $menu_item;
 		}
-		error_log($top_most);
+		//error_log($top_most);
 		if ($top_most === false)
 			return false;
 		foreach ($menu_items as $menu_item) {
@@ -123,7 +123,8 @@ class Nice_Navigation_Widget extends WP_Widget {
 			$top_most = $ided_menu_items[$top_most->menu_item_parent];
 		}
 		$tree = tag('ul');
-		$tree->append($this->get_sub_post_tree($top_most, $post->ID));
+		foreach ($top_most->children as $child)
+			$tree->append($this->get_sub_post_tree($child, $post->ID));
 
 		echo $before_widget;
 		echo $before_title;
@@ -140,9 +141,7 @@ class Nice_Navigation_Widget extends WP_Widget {
 	function form($instance) {
 		$instance = wp_parse_args((array) $instance, self::$defaults);
 		echo tag('p')->append(
-				tag('label')->attr('for', $this->get_field_name('title'))->append(__('Title', self::$domain)),
-				tag('br'),
-				tag('input')->attr(array(
+				tag('label')->attr('for', $this->get_field_name('title'))->append(__('Title', self::$domain)), tag('br'), tag('input')->attr(array(
 					'type' => 'text',
 					'name' => $this->get_field_name('title'),
 					'id' => $this->get_field_id('title'),
@@ -160,9 +159,7 @@ class Nice_Navigation_Widget extends WP_Widget {
 			$reference_menu_select->append($option);
 		}
 		echo tag('p')->append(
-				tag('label')->attr('for', $this->get_field_name('reference-menu'))->append(__('Reference Menu', self::$domain)),
-				tag('br'),
-				$reference_menu_select
+				tag('label')->attr('for', $this->get_field_name('reference-menu'))->append(__('Reference Menu', self::$domain)), tag('br'), $reference_menu_select
 		);
 	}
 

@@ -58,15 +58,22 @@ if (!function_exists('tag')) {
 			return $this;
 		}
 		
-		public function addClass($classes) {
-			if (is_array($classes))
-				$this->classes = array_merge($this->classes, $classes);
-			elseif (func_num_args())
-				$classes = func_get_args();
-			elseif (strstr($classes, ' ') > -1)
-				$this->classes = array_merge($this->classes, explode(' ', $classes));
-			else
-				$this->classes[] = $classes;
+		private function cleanClasses($args) {
+//			$args = func_get_args();
+			$classes = array();
+			foreach ($args as $arg)
+				if (is_array($arg))
+					$classes = array_merge($classes, $this->cleanClasses($arg));
+				elseif (strstr($arg, ' ') > -1)
+					$classes = array_merge($classes, $this->cleanClasses(explode(' ', $arg)));
+				else
+					$classes[] = $arg;
+			return $classes;
+		}
+		
+		public function addClass() {
+			$classes = func_get_args();
+			$this->classes = array_merge($this->classes, $this->cleanClasses($classes));
 			$this->classes = array_unique($this->classes);
 			return $this;
 		}
@@ -113,6 +120,9 @@ if (!function_exists('tag')) {
 				}
 				$css = implode('; ', $css);
 				$result .= ' style="' . htmlentities2($css) . '"';
+			}
+			if (count($this->classes)) {
+				$result .= ' class="' . htmlentities2(implode(' ', $this->classes)) . '"';
 			}
 			if (count($this->children) || $this->forceClose) {
 				$result .= '>';
