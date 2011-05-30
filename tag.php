@@ -1,4 +1,5 @@
 <?php
+
 if (!function_exists('tag')) {
 	class Tag {
 		private $name = '';
@@ -137,6 +138,33 @@ if (!function_exists('tag')) {
 
 	function tag($tagName, $forceClose = false) {
 		return new Tag($tagName, $forceClose);
+	}
+	
+	function br() {
+		return new Tag('br', false);
+	}
+	
+	function hr() {
+		return new Tag('hr', false);
+	}
+	
+	function div() {
+		return new Tag('div', true);
+	}
+	
+	function span() {
+		return new Tag('span', true);
+	}
+	
+	function iframe() {
+		return new Tag('iframe', true);
+	}
+	
+	function script($src = null) {
+		$m = new Tag('script', true);
+		if ($src)
+			$m->attr('src', $src);
+		return $m->attr('type', 'text/javascript');
 	}
 }
 ?>
