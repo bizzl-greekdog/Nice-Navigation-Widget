@@ -1,14 +1,31 @@
 <?php
-
 /*
-  Plugin Name: Nice Navigation Widget
-  Plugin URI:
-  Description: This widgets adds a sub navigation to any page, post or whatever.
-  Version: 1.0.0
-  Author: Benjamin Kleiner <bizzl@users.sourceforge.net>
-  Author URI:
-  License: LGPL3
- */
+Plugin Name:	Nice Navigation Widget
+Plugin URI:		https://github.com/bizzl-greekdog/Nice-Navigation-Widget
+Description:	This widget adds a sub navigation to any page, post or whatever.
+Version:		1.0.0
+Author:			Benjamin Kleiner
+Author URI:		https://github.com/bizzl-greekdog
+License:		LGPL3
+*/
+/*
+    Copyright (c) 2011 Benjamin Kleiner <bizzl@users.sourceforge.net>
+ 
+    This file is part of Nice Navigation Widget.
+
+    Nice Navigation Widget is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Nice Navigation Widget is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with Nice Navigation Widget. If not, see <http://www.gnu.org/licenses/>.
+*/
 
 if (!function_exists('join_path')) {
 
